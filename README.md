@@ -30,7 +30,6 @@ cp .env.example .env
 
 ```bash
 composer install
-npm install
 ```
 
 ### 4. Generate Application Key
