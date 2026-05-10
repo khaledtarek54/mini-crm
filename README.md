@@ -1,57 +1,60 @@
-# Mini CRM System
+# Mini CRM
 
-This is a Mini CRM system built using Laravel framework. The system allows an admin user to manage employees and customers, assign customers to employees, and allow employees to perform actions on customers (such as calls, visits, or follow-ups) and record the results of these actions.
+> A small CRM API in **Laravel 10** that demonstrates clean role separation between admin and employees, Sanctum-based auth, and validation through custom Form Requests.
+
+## Domain
+
+- **Admins** can manage employees and customers, and assign customers to specific employees.
+- **Employees** can add their own customers and log actions on each customer (call, visit, follow-up) along with the result of the action.
 
 ## Features
 
-- Admin can add employees and customers.
-- Admin can assign customers to specific employees.
-- Employees can add new customers.
-- Employees can perform actions on customers with types (call, visit, or follow-up).
-- Employees can record the results of their actions.
-- Authentication using Laravel Sanctum.
-- Custom form requests for validation.
+- Role-aware access: admin vs employee
+- Customer assignment from admin → employee
+- Action logging on customers (call / visit / follow-up) with result tracking
+- Sanctum API authentication
+- Custom Form Requests for input validation
 
-## Installation Steps
+## Tech stack
 
-### 1. Clone the repository
+- PHP 8.1+ / Laravel 10
+- Laravel Sanctum
+- MySQL
+
+## Quick start
 
 ```bash
 git clone https://github.com/khaledtarek54/mini-crm.git
-```
+cd mini-crm
 
-### 2. Set Up Environment Variables
-
-```bash
-cp .env.example .env
-```
-
-### 3. Install Dependencies
-
-```bash
 composer install
-```
-
-### 4. Generate Application Key
-
-```bash
+cp .env.example .env
 php artisan key:generate
-```
+php artisan migrate --seed
 
-### 5. Seed the Database
-
-```bash
-php artisan db:seed
-```
-
-### 5. Run the Development Server
-
-```bash
 php artisan serve
 ```
 
-Thanks for your time :saluting_face: 
+## API overview
 
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| POST   | `/api/auth/login` | — | Issue Sanctum token |
+| POST   | `/api/employees` | admin | Add an employee |
+| POST   | `/api/customers` | admin/employee | Add a customer |
+| POST   | `/api/customers/{id}/assign` | admin | Assign a customer to an employee |
+| POST   | `/api/customers/{id}/actions` | employee | Log an action (call / visit / follow-up) |
 
+## Run the tests
 
+```bash
+php artisan test
+```
 
+## License
+
+MIT
+
+---
+
+Built by [Khaled Tarek](https://github.com/khaledtarek54) · [LinkedIn](https://www.linkedin.com/in/khaled-tarek-3596401b1)
